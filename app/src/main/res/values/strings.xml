@@ -1,0 +1,32 @@
+<resources>
+    // App name
+    <string name="app_name">BlueLock</string>
+
+    // Registration
+    <string name="text_account">All Accounts</string>
+    <string name="hint_email">Email...</string>
+    <string name="hint_password">Password...</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="text_login">__Login</string>
+    <string name="text_register">Sign Up</string>
+
+    //Login
+    <string name="text_not_member">No account yet? Create one</string>
+    <string name="text_member">Already a member? Login</string>
+
+    //error message
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_password_match">Password Does NOt Matches</string>
+    <string name="error_password_or_email">Wrong Email or Password</string>
+
+    //Success message
+    <string name="success_message">Registration Successful</string>
+    <string name="refresh">refresh</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <string name="disconnect">disconnect</string>
+    <string name="connect">connect</string>
+
+</resources>

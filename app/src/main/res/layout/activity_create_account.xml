@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/nestedScrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools  ="http://schemas.android.com/tools"
+    android:layout_width    ="match_parent"
+    android:layout_height   ="match_parent"
+    android:paddingBottom   ="20dp"
+    android:paddingLeft ="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop  ="20dp"
+    tools:context       =".views.CreateAccountActivity">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width    ="match_parent"
+        android:layout_height   ="match_parent"
+        android:orientation     ="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width    ="wrap_content"
+            android:layout_height   ="wrap_content"
+            android:layout_gravity  ="center_horizontal"
+            android:layout_marginTop="40dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutEmail"
+            android:layout_width    ="match_parent"
+            android:layout_height   ="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id  ="@+id/Email"
+                android:layout_width    ="match_parent"
+                android:layout_height   ="wrap_content"
+                android:hint="@string/hint_email"
+                android:inputType   ="textEmailAddress"
+                android:maxLines    ="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutPassword"
+            android:layout_width    ="match_parent"
+            android:layout_height   ="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Password"
+                android:layout_width    ="match_parent"
+                android:layout_height   ="wrap_content"
+                android:hint        ="@string/hint_password"
+                android:inputType   ="textPassword"
+                android:maxLines    ="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id              ="@+id/LayoutConfirmPassword"
+            android:layout_width    ="match_parent"
+            android:layout_height   ="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ConfirmPassword"
+                android:layout_width    ="match_parent"
+                android:layout_height   ="wrap_content"
+                android:hint        ="@string/hint_confirm_password"
+                android:inputType   ="textPassword"
+                android:maxLines    ="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/CreateAccount"
+            android:layout_width    ="match_parent"
+            android:layout_height   ="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text            ="@string/text_register" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/LoginLink"
+            android:layout_width    ="fill_parent"
+            android:layout_height   ="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity         ="center"
+            android:text            ="@string/text_member"
+            android:textSize        ="16dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

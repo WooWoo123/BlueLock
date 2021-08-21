@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "555845313100",
+    "project_id": "bluelock-1",
+    "storage_bucket": "bluelock-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555845313100:android:407a7290c77c21f88f4ae9",
+        "android_client_info": {
+          "package_name": "su.ju.osvi.bluelock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555845313100-d6hgdgk5bon95criik4kitdrev0nm1pc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "su.ju.osvi.bluelock",
+            "certificate_hash": "aa5e1ee6408d3cbe1f884515be2826e86bdaf265"
+          }
+        },
+        {
+          "client_id": "555845313100-6rnke4l73hdtcabkteivk5ugn3pbv39e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYNa8RoCQyJAQUdYswCPIBt-l0FUR21cM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555845313100-6rnke4l73hdtcabkteivk5ugn3pbv39e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
