@@ -7,7 +7,7 @@
     <string name="hint_email">Email...</string>
     <string name="hint_password">Password...</string>
     <string name="hint_confirm_password">Confirm Password</string>
-    <string name="text_login">__Login</string>
+    <string name="text_login">Login</string>
     <string name="text_register">Sign Up</string>
 
     //Login

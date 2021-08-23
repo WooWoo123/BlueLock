@@ -10,7 +10,8 @@
     android:paddingLeft ="20dp"
     android:paddingRight="20dp"
     android:paddingTop  ="20dp"
-    tools:context       =".views.CreateAccountActivity">
+    tools:context       =".views.CreateAccountActivity"
+    android:background="@drawable/background_image">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
