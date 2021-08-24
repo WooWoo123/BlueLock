@@ -17,8 +17,7 @@ import java.lang.Exception
 import java.util.*
 
 class ControlActivity : AppCompatActivity() {
-    var CorrectUser : Boolean = false
-    var emailSuccess : Int = 0
+    var correctUser : Boolean = false
     val databaseObj = Database()
     lateinit var device        : BluetoothDevice
     var characteristic         : BluetoothGattCharacteristic = BluetoothGattCharacteristic(m_myUUID, 1,1)
@@ -42,7 +41,7 @@ class ControlActivity : AppCompatActivity() {
         control_led_on.setOnClickListener{
 
             if (device != null) {
-                if(CorrectUser) {
+                if(correctUser) {
                     sendCommand("on")
                 } else toast("Wrong User")
                 //toast("LED is ON")
@@ -52,7 +51,7 @@ class ControlActivity : AppCompatActivity() {
         control_led_off.setOnClickListener {
             //  toast("LED is OFF")
             if (device != null) {
-                if(CorrectUser) {
+                if(correctUser) {
                     sendCommand("off")
                 } else toast("Wrong User")
             }
@@ -90,17 +89,8 @@ class ControlActivity : AppCompatActivity() {
 
     private fun connectToDevice(){
         Log.v("Control activity", "Connected to device")
-        toast("Connected to device")
         bluetoothGatt  = device.connectGatt(this, false, bleGattCallback)
         checkEmail()
-        if(emailSuccess == 1) {
-            toast("helloooooooo")
-            setEmail()
-            CorrectUser = true
-            toast("Bluetooth device connected")
-        } else if(emailSuccess == 2){
-            toast("Bluetooth device not available")
-        }
     }
 
     private val bleGattCallback : BluetoothGattCallback by lazy {
@@ -135,17 +125,10 @@ class ControlActivity : AppCompatActivity() {
             }
         }
     }
-    fun addCollection(){
-        val db = FirebaseFirestore.getInstance()
-        val user = Firebase.auth.currentUser
-        val email = user?.email
-        databaseObj.password = (Math.random() * 100000000).toInt()
-        databaseObj.user = email.toString()
-        databaseObj.lockID = 1
-        db.collection("TestCollection")
-            .add(databaseObj)
-    }
+
     fun setEmail(){
+        toast("Connected to device")
+        correctUser = true
         val db  = FirebaseFirestore.getInstance()
         val map : MutableMap<String, Any> = HashMap()
         try {
@@ -153,7 +136,6 @@ class ControlActivity : AppCompatActivity() {
             db.collection("LockUser")
                 .document("LockUser")
                 .set(map)
-            toast("setEmail success")
         }catch (e: Exception){
             toast(e.message.toString())
         }
@@ -168,16 +150,13 @@ class ControlActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val data = document.data as Map<String, String>
-                    //toast(data.toString())
-                    //toast("{UserEmail="+Firebase.auth.currentUser!!.email.toString()+"}")
+
                     if(data.toString().equals("0") || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
-                        toast("hej")
-                        emailSuccess = 1
+                        setEmail()
                     }else{
-                        toast("hejdå")
-                        emailSuccess = 2}
+                        toast("Bluetooth Device not available")
+                        }
                 }
             }
     }
-
-    }
+}

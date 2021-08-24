@@ -9,6 +9,5 @@ import java.util.*
 class Database {
 
     var user: String = ""
-    var password: Int = 0
     var lockID: Int = 0
 }
