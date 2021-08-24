@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BlueLock</string>
+    <string name="text_account">Alla konton</string>
+    <string name="hint_email">Email...</string>
+    <string name="hint_password">Lösenord...</string>
+    <string name="hint_confirm_password">Bekräfta Lösenord</string>
+    <string name="text_login">Logga in</string>
+    <string name="text_register">Lägg till google konto</string>
+    <string name="text_not_member">Inget konto än? Skapa ett</string>
+    <string name="text_member">Har redan ett konto? Logga in</string>
+    <string name="error_message_email">Fyll i korekt mail</string>
+    <string name="error_message_password">Fyll i lösenord</string>
+    <string name="error_email_exists">Mailen är redan registrerad</string>
+    <string name="error_password_match">Lösenordet matchar inte</string>
+    <string name="error_password_or_email">Fel Mail eller lösenord</string>
+    <string name="success_message">Registrering fullbordad</string>
+    <string name="refresh">Uppdatera</string>
+    <string name="on">Tänd</string>
+    <string name="off">Släck</string>
+    <string name="disconnect">Koppla från</string>
+    <string name="connect">Anslut</string>
+</resources>

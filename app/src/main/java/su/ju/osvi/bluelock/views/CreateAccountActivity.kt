@@ -41,13 +41,12 @@ class CreateAccountActivity : AppCompatActivity() {
 
         createAccountButton.setOnClickListener {
            signIn()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
         }
 
         alreadyAccountButton.setOnClickListener {
             toast("please sign into your account")
-            finish()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
