@@ -3,16 +3,21 @@ package su.ju.osvi.bluelock.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import su.ju.osvi.bluelock.R
+import su.ju.osvi.bluelock.extentions.Extensions.toast
 
 class HomeActivity : AppCompatActivity() {
+    val databaseObj = Database()
 
     private companion object {
         private const val TAG = "HomeActivity"
@@ -23,10 +28,13 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val collectionButton = findViewById<Button>(R.id.btn_addCollection)
         val unitsButton         = findViewById<Button>(R.id.btnUnits)
         val myActiveUnitButton  = findViewById<Button>(R.id.btnMyActiveUnit)
 
+        collectionButton.setOnClickListener {
+            addCollection()
+        }
 
         unitsButton.setOnClickListener {
             val intent = Intent(this, SelectDeviceActivity::class.java)
@@ -58,5 +66,13 @@ class HomeActivity : AppCompatActivity() {
     }
     override fun onBackPressed() {
 
+    }
+
+    fun addCollection(){
+        databaseObj.password = (Math.random() * 100000000).toInt()
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("TestCollection")
+            .add(databaseObj)
     }
 }
