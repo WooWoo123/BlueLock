@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
@@ -38,6 +39,9 @@ class ControlActivity : AppCompatActivity() {
         val control_led_off         = this.findViewById<Button>(R.id.control_led_off)
         val control_led_connect     = this.findViewById<Button>(R.id.control_led_disconnect)
 
+        control_led_on.visibility = View.INVISIBLE
+        control_led_off.visibility = View.INVISIBLE
+
         control_led_on.setOnClickListener{
 
             if (device != null) {
@@ -60,7 +64,13 @@ class ControlActivity : AppCompatActivity() {
         control_led_connect.setOnClickListener {
             connectToDevice()
         }
+        if(correctUser){
+            control_led_on.visibility = View.VISIBLE
+            control_led_off.visibility = View.VISIBLE
+        }
+
     }
+
 
     private fun sendCommand(input: String){
         try {
