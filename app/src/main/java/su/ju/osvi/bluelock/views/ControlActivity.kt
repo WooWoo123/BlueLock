@@ -3,14 +3,23 @@ package su.ju.osvi.bluelock.views
 import android.bluetooth.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Button
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import org.jetbrains.anko.email
 import org.jetbrains.anko.toast
 import su.ju.osvi.bluelock.R
 import java.lang.Exception
 import java.util.*
 
 class ControlActivity : AppCompatActivity() {
+    var CorrectUser : Boolean = false
+    var emailSuccess : Int = 0
+    val databaseObj = Database()
     lateinit var device        : BluetoothDevice
     var characteristic         : BluetoothGattCharacteristic = BluetoothGattCharacteristic(m_myUUID, 1,1)
     lateinit var bluetoothGatt : BluetoothGatt
@@ -33,7 +42,9 @@ class ControlActivity : AppCompatActivity() {
         control_led_on.setOnClickListener{
 
             if (device != null) {
-                sendCommand("on")
+                if(CorrectUser) {
+                    sendCommand("on")
+                } else toast("Wrong User")
                 //toast("LED is ON")
             }
         }
@@ -41,7 +52,9 @@ class ControlActivity : AppCompatActivity() {
         control_led_off.setOnClickListener {
             //  toast("LED is OFF")
             if (device != null) {
-                sendCommand("off")
+                if(CorrectUser) {
+                    sendCommand("off")
+                } else toast("Wrong User")
             }
         }
 
@@ -79,6 +92,15 @@ class ControlActivity : AppCompatActivity() {
         Log.v("Control activity", "Connected to device")
         toast("Connected to device")
         bluetoothGatt  = device.connectGatt(this, false, bleGattCallback)
+        checkEmail()
+        if(emailSuccess == 1) {
+            toast("helloooooooo")
+            setEmail()
+            CorrectUser = true
+            toast("Bluetooth device connected")
+        } else if(emailSuccess == 2){
+            toast("Bluetooth device not available")
+        }
     }
 
     private val bleGattCallback : BluetoothGattCallback by lazy {
@@ -113,4 +135,49 @@ class ControlActivity : AppCompatActivity() {
             }
         }
     }
-}
+    fun addCollection(){
+        val db = FirebaseFirestore.getInstance()
+        val user = Firebase.auth.currentUser
+        val email = user?.email
+        databaseObj.password = (Math.random() * 100000000).toInt()
+        databaseObj.user = email.toString()
+        databaseObj.lockID = 1
+        db.collection("TestCollection")
+            .add(databaseObj)
+    }
+    fun setEmail(){
+        val db  = FirebaseFirestore.getInstance()
+        val map : MutableMap<String, Any> = HashMap()
+        try {
+            map["UserEmail"] = Firebase.auth.currentUser!!.email.toString()
+            db.collection("LockUser")
+                .document("LockUser")
+                .set(map)
+            toast("setEmail success")
+        }catch (e: Exception){
+            toast(e.message.toString())
+        }
+
+    }
+
+    fun checkEmail() {
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("LockUser").document("LockUser")
+        val currentUserEmail = Firebase.auth.currentUser!!.email.toString()
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val data = document.data as Map<String, String>
+                    //toast(data.toString())
+                    //toast("{UserEmail="+Firebase.auth.currentUser!!.email.toString()+"}")
+                    if(data.toString().equals("0") || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
+                        toast("hej")
+                        emailSuccess = 1
+                    }else{
+                        toast("hejdå")
+                        emailSuccess = 2}
+                }
+            }
+    }
+
+    }

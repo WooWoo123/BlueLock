@@ -17,7 +17,7 @@ import su.ju.osvi.bluelock.R
 import su.ju.osvi.bluelock.extentions.Extensions.toast
 
 class HomeActivity : AppCompatActivity() {
-    val databaseObj = Database()
+
 
     private companion object {
         private const val TAG = "HomeActivity"
@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
         val myActiveUnitButton  = findViewById<Button>(R.id.btnMyActiveUnit)
 
         collectionButton.setOnClickListener {
-            addCollection()
+
         }
 
         unitsButton.setOnClickListener {
@@ -68,11 +68,14 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    fun addCollection(){
-        databaseObj.password = (Math.random() * 100000000).toInt()
-
+    /*fun addCollection(){
         val db = FirebaseFirestore.getInstance()
+        val user = Firebase.auth.currentUser
+        val email = user?.email
+        databaseObj.password = (Math.random() * 100000000).toInt()
+        databaseObj.user = email.toString()
+        databaseObj.lockID = 1
         db.collection("TestCollection")
             .add(databaseObj)
-    }
+    }*/
 }
