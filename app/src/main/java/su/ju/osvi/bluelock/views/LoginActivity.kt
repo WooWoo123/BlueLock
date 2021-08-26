@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var signInInputsArray  : Array<TextInputEditText>
     private lateinit var loginButton        : AppCompatButton
     private lateinit var createAccountButton: AppCompatTextView
+    private lateinit var resetPasswordButton: AppCompatTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
         nestedScrollView    = findViewById<NestedScrollView>(R.id.nestedScrollView)
         loginButton         = findViewById<AppCompatButton>(R.id.appCompatButtonLogin)
         createAccountButton = findViewById<AppCompatTextView>(R.id.textViewLinkRegister)
+        resetPasswordButton = findViewById<AppCompatTextView>(R.id.reset_password)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -76,6 +78,10 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, CreateAccountActivity::class.java)
             startActivity(intent)
             finish()
+        }
+        resetPasswordButton.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 

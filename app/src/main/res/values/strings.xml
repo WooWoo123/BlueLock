@@ -28,5 +28,10 @@
     <string name="off">off</string>
     <string name="disconnect">disconnect</string>
     <string name="connect">connect</string>
+    <string name="send_password_reset">Send Password Reset</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="message_to_reset_password">Please enter your Email/Username and we will send you an email to reset your password</string>
+    <string name="reset_password">Reset Password</string>
+
 
 </resources>

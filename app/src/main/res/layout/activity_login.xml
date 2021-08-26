@@ -53,6 +53,16 @@
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:maxLines="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id                  ="@+id/reset_password"
+                android:layout_width        ="fill_parent"
+                android:layout_height       ="wrap_content"
+                android:gravity             ="end"
+                android:text                ="@string/reset_password"
+                android:textSize            ="16sp"
+                android:textColor           ="@color/black"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -78,7 +88,8 @@
             android:layout_marginTop    ="30dp"
             android:gravity ="center"
             android:text    ="@string/text_not_member"
-            android:textSize="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
             />
 
 
