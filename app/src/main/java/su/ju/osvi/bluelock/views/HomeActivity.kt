@@ -13,8 +13,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import org.jetbrains.anko.toast
 import su.ju.osvi.bluelock.R
 import su.ju.osvi.bluelock.extentions.Extensions.toast
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,22 +30,20 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val collectionButton = findViewById<Button>(R.id.btn_addCollection)
         val unitsButton         = findViewById<Button>(R.id.btnUnits)
-        val myActiveUnitButton  = findViewById<Button>(R.id.btnMyActiveUnit)
+        val btnEnd              = findViewById<Button>(R.id.btnMyActiveUnit)
 
-        collectionButton.setOnClickListener {
 
+
+        btnEnd.setOnClickListener {
+            disconnect()
         }
 
         unitsButton.setOnClickListener {
             val intent = Intent(this, SelectDeviceActivity::class.java)
             startActivity(intent)
         }
-        myActiveUnitButton.setOnClickListener {
-            val intent = Intent(this, ActiveUnitActivity::class.java)
-            startActivity(intent)
-        }
+
         auth = Firebase.auth
     }
 
@@ -67,15 +67,35 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
     }
-
-    /*fun addCollection(){
+    fun disconnect() {
         val db = FirebaseFirestore.getInstance()
-        val user = Firebase.auth.currentUser
-        val email = user?.email
-        databaseObj.password = (Math.random() * 100000000).toInt()
-        databaseObj.user = email.toString()
-        databaseObj.lockID = 1
-        db.collection("TestCollection")
-            .add(databaseObj)
-    }*/
+        val docRef = db.collection("LockUser").document("LockUser")
+
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val data = document.data as Map<String, String>
+
+                    if(data.toString().equals("0") || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
+                        resetEmail()
+                    }else{
+                        toast("Wrong user, cant disconnect")
+                    }
+                }
+            }
+    }
+
+    fun resetEmail(){
+        val db  = FirebaseFirestore.getInstance()
+        val map : MutableMap<String, Any> = HashMap()
+        try {
+            map["UserEmail"] = "0"
+            db.collection("LockUser")
+                .document("LockUser")
+                .set(map)
+        }catch (e: Exception){
+            toast(e.message.toString())
+        }
+    }
+
 }

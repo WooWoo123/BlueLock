@@ -39,8 +39,6 @@ class ControlActivity : AppCompatActivity() {
         val control_led_off         = this.findViewById<Button>(R.id.control_led_off)
         val control_led_connect     = this.findViewById<Button>(R.id.control_led_disconnect)
 
-        control_led_on.visibility = View.INVISIBLE
-        control_led_off.visibility = View.INVISIBLE
 
         control_led_on.setOnClickListener{
 
@@ -63,10 +61,6 @@ class ControlActivity : AppCompatActivity() {
 
         control_led_connect.setOnClickListener {
             connectToDevice()
-        }
-        if(correctUser){
-            control_led_on.visibility = View.VISIBLE
-            control_led_off.visibility = View.VISIBLE
         }
 
     }
@@ -101,6 +95,7 @@ class ControlActivity : AppCompatActivity() {
         Log.v("Control activity", "Connected to device")
         bluetoothGatt  = device.connectGatt(this, false, bleGattCallback)
         checkEmail()
+
     }
 
     private val bleGattCallback : BluetoothGattCallback by lazy {
@@ -155,13 +150,12 @@ class ControlActivity : AppCompatActivity() {
     fun checkEmail() {
         val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("LockUser").document("LockUser")
-        val currentUserEmail = Firebase.auth.currentUser!!.email.toString()
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val data = document.data as Map<String, String>
 
-                    if(data.toString().equals("0") || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
+                    if(data.toString() == "{UserEmail=" + "0" +"}" || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
                         setEmail()
                     }else{
                         toast("Bluetooth Device not available")
