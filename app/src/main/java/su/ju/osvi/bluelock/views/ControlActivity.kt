@@ -144,7 +144,14 @@ class ControlActivity : AppCompatActivity() {
         }catch (e: Exception){
             toast(e.message.toString())
         }
-
+        try {
+            map["Password"] = (Math.random() * 100000000).toInt()
+            db.collection("LockUser")
+                .document("LockUser")
+                .set(map)
+        }catch (e: Exception){
+            toast(e.message.toString())
+        }
     }
 
     fun checkEmail() {
