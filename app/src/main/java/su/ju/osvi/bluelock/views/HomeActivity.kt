@@ -69,14 +69,24 @@ class HomeActivity : AppCompatActivity() {
     }
     fun disconnect() {
         val db = FirebaseFirestore.getInstance()
+        val dbTwo = FirebaseFirestore.getInstance()
         val docRef = db.collection("LockUser").document("LockUser")
+        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
+        var password : String = "hej"
+
+        userDocRef.get()
+                .addOnSuccessListener { document ->
+                    password =  document["Password"].toString()
+                }
 
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val data = document.data as Map<String, String>
 
-                    if(data.toString().equals("0") || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
+
+                    if(data["UserEmail"].toString().equals("0") || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()
+                            && data["Password"].toString() == "" || data["Password"].toString() == password){
                         resetEmail()
                     }else{
                         toast("Wrong user, cant disconnect")
@@ -86,13 +96,26 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun resetEmail(){
+        toast("resetEmail")
         val db  = FirebaseFirestore.getInstance()
+        val dbTwo = FirebaseFirestore.getInstance()
+        val mapTwo : MutableMap<String, Any> = HashMap()
         val map : MutableMap<String, Any> = HashMap()
         try {
             map["UserEmail"] = "0"
+            map["Password"]  = ""
             db.collection("LockUser")
                 .document("LockUser")
                 .set(map)
+        }catch (e: Exception){
+            toast(e.message.toString())
+        }
+        try {
+            mapTwo["UserEmail"] = "0"
+            mapTwo["Password"]  = ""
+            dbTwo.collection("LockUser")
+                    .document("UserPasword")
+                    .set(map)
         }catch (e: Exception){
             toast(e.message.toString())
         }

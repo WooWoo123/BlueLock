@@ -7,6 +7,7 @@ import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -136,6 +137,7 @@ class ControlActivity : AppCompatActivity() {
         correctUser = true
         val db  = FirebaseFirestore.getInstance()
         val map : MutableMap<String, Any> = HashMap()
+        val mapTwo : MutableMap<String, Any> = HashMap()
         try {
             map["UserEmail"] = Firebase.auth.currentUser!!.email.toString()
             db.collection("LockUser")
@@ -147,8 +149,12 @@ class ControlActivity : AppCompatActivity() {
         try {
             map["Password"] = (Math.random() * 100000000).toInt()
             db.collection("LockUser")
-                .document("LockUser")
-                .set(map)
+                    .document("LockUser")
+                    .set(map)
+            mapTwo["Password"] = (Math.random() * 100000000).toInt()
+            db.collection("LockUser")
+                    .document("UserPassword")
+                    .set(map)
         }catch (e: Exception){
             toast(e.message.toString())
         }
@@ -156,18 +162,33 @@ class ControlActivity : AppCompatActivity() {
 
     fun checkEmail() {
         val db = FirebaseFirestore.getInstance()
+        val dbTwo = FirebaseFirestore.getInstance()
         val docRef = db.collection("LockUser").document("LockUser")
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val data = document.data as Map<String, String>
+        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
+        var password = ""
 
-                    if(data.toString() == "{UserEmail=" + "0" +"}" || data.toString() == "{UserEmail=" + Firebase.auth.currentUser!!.email.toString() +"}"){
-                        setEmail()
-                    }else{
-                        toast("Bluetooth Device not available")
-                        }
+        userDocRef.get()
+                .addOnSuccessListener { document ->
+                    password = document["Password"].toString()
                 }
-            }
+       try {
+            docRef.get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+
+                            val data = document.data as Map<String, String>
+
+                            if(data["UserEmail"].toString() ==  "0" ||
+                                    data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()
+                                    && data["Password"] == "" || data["Password"] == password){
+                                setEmail()
+                            }else{
+                                toast("Bluetooth Device not available")
+                            }
+                        }
+        }
+            }catch(e : Exception){
+                toast(e.message.toString())
+        }
     }
 }
