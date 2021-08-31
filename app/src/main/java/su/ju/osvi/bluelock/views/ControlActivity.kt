@@ -161,34 +161,36 @@ class ControlActivity : AppCompatActivity() {
     }
 
     fun checkEmail() {
-        val db = FirebaseFirestore.getInstance()
-        val dbTwo = FirebaseFirestore.getInstance()
-        val docRef = db.collection("LockUser").document("LockUser")
-        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
-        var password = ""
 
-        userDocRef.get()
-                .addOnSuccessListener { document ->
-                    password = document["Password"].toString()
-                }
-       try {
+        val db = FirebaseFirestore.getInstance()
+
+        val docRef = db.collection("LockUser").document("LockUser")
             docRef.get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
-
                             val data = document.data as Map<String, String>
 
-                            if(data["UserEmail"].toString() ==  "0" ||
-                                    data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()
-                                    && data["Password"] == "" || data["Password"] == password){
-                                setEmail()
+                            if(data["UserEmail"].toString() ==  "0" || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()){
+                                checkPassword(data)
+                                //setEmail()
                             }else{
                                 toast("Bluetooth Device not available")
                             }
                         }
         }
-            }catch(e : Exception){
-                toast(e.message.toString())
-        }
+    }
+
+    fun checkPassword(emailMap : Map<String, String>){
+        val dbTwo = FirebaseFirestore.getInstance()
+        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
+        userDocRef.get()
+                .addOnSuccessListener { document ->
+
+                    if(emailMap["Password"].toString() == "" || emailMap["Password"].toString() == document["Password"].toString()){
+                        setEmail()
+                    }else{
+                        toast("Bluetooth Device not available (checkPassword)")
+                    }
+                }
     }
 }
