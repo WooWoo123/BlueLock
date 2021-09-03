@@ -36,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         btnEnd.setOnClickListener {
-            disconnect()
+            disconnectEmail()
         }
 
         unitsButton.setOnClickListener {
@@ -67,29 +67,35 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
     }
-    fun disconnect() {
-        val dbTwo = FirebaseFirestore.getInstance()
+    fun disconnectEmail() {
         val db = FirebaseFirestore.getInstance()
-        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
-        var password : String = "hej"
-        userDocRef.get()
-                .addOnSuccessListener { document ->
-                    password =  document["Password"].toString()
-                }
         val docRef = db.collection("LockUser").document("LockUser")
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val data = document.data as Map<String, String>
-
-                    if(data["UserEmail"].toString().equals("0") || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()
-                            && data["Password"].toString() == "" || data["Password"].toString() == password){
-                        resetEmail()
+                    if(data["UserEmail"].toString().equals("0") || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()) {
+                        disconnectPassword(data)
                     }else{
-                        toast("Wrong user, cant disconnect")
+                        toast("Wrong user, cant disconnect (email)")
                     }
                 }
             }
+    }
+
+    fun disconnectPassword(emailMap : Map<String, String>){
+        val dbTwo = FirebaseFirestore.getInstance()
+        val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
+        userDocRef.get()
+            .addOnSuccessListener { document ->
+                if(emailMap["Password"].toString() == "" || emailMap["Password"].toString() == document["Password"].toString()){
+                    resetEmail()
+                }else{
+                    toast("Wrong user, cant disconnect (password)")
+                }
+
+            }
+
     }
 
     fun resetEmail(){

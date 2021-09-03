@@ -172,7 +172,6 @@ class ControlActivity : AppCompatActivity() {
 
                             if(data["UserEmail"].toString() ==  "0" || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()){
                                 checkPassword(data)
-                                //setEmail()
                             }else{
                                 toast("Bluetooth Device not available")
                             }
@@ -189,7 +188,7 @@ class ControlActivity : AppCompatActivity() {
                     if(emailMap["Password"].toString() == "" || emailMap["Password"].toString() == document["Password"].toString()){
                         setEmail()
                     }else{
-                        toast("Bluetooth Device not available (checkPassword)")
+                        toast("Bluetooth Device not available")
                     }
                 }
     }
