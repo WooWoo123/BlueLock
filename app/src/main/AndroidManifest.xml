@@ -22,8 +22,6 @@
         <activity android:name=".views.ForgotPasswordActivity"></activity>
         <activity android:name=".views.SelectDeviceActivity" />
         <activity android:name=".views.ControlActivity" />
-        <activity android:name=".views.ChosenUnitActivity" />
-        <activity android:name=".views.ActiveUnitActivity" />
         <activity android:name=".views.CreateAccountActivity" />
         <activity android:name=".views.LoginActivity">
             <intent-filter>

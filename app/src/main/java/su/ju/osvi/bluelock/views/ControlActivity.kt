@@ -20,7 +20,6 @@ import java.util.*
 
 class ControlActivity : AppCompatActivity() {
     var correctUser : Boolean = false
-    val databaseObj = Database()
     lateinit var device        : BluetoothDevice
     var characteristic         : BluetoothGattCharacteristic = BluetoothGattCharacteristic(m_myUUID, 1,1)
     lateinit var bluetoothGatt : BluetoothGatt
@@ -35,7 +34,7 @@ class ControlActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control)
         val intent = intent
-        device = intent.getParcelableExtra("DEVICE_PAIRED")!!
+        device = intent.getParcelableExtra("PAIRED_DEVICE")!!
         val control_led_on          = this.findViewById<Button>(R.id.control_led_on)
         val control_led_off         = this.findViewById<Button>(R.id.control_led_off)
         val control_led_connect     = this.findViewById<Button>(R.id.control_led_disconnect)

@@ -62,7 +62,7 @@ class SelectDeviceActivity : AppCompatActivity() {
 
         select_device_list.setOnItemClickListener { _, _, position, id ->
             val unitItem: BluetoothDevice = btDevices[position]
-            val intent                    = Intent(this, ChosenUnitActivity::class.java)
+            val intent                    = Intent(this, ControlActivity::class.java)
             intent.putExtra("PAIRED_DEVICE", btDevices[0])
             startActivity(intent)
         }
