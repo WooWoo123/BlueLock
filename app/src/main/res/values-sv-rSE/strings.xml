@@ -20,4 +20,10 @@
     <string name="off">Släck</string>
     <string name="disconnect">Koppla från</string>
     <string name="connect">Anslut</string>
+    <string name="send_password_reset">Återställ lösenord</string>
+    <string name="enter_email_address">Ange email</string>
+    <string name="message_to_reset_password">Andge mail och lösenord, ett mail med instruktioner för återställning av lösenord kommer skickas till den angivna mailen</string>
+    <string name="reset_password">Återställ lösenord</string>
+    <string name="end_connection">Avsluta bokning utav enhet</string>
+    <string name="pair_to_device">Anslut till enhet</string>
 </resources>

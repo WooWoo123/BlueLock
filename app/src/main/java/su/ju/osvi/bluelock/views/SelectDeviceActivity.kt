@@ -50,8 +50,6 @@ class SelectDeviceActivity : AppCompatActivity() {
             1)
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_device)
