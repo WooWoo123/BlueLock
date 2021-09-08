@@ -23,6 +23,8 @@ class HomeActivity : AppCompatActivity() {
 
     private companion object {
         private const val TAG = "HomeActivity"
+        private const val RESETED_DB_MAIL = "0"
+        private const val RESETED_DB_PASSWORD = ""
     }
 
     private lateinit var auth: FirebaseAuth
@@ -73,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val data = document.data as Map<String, String>
-                    if(data["UserEmail"].toString().equals("0") || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()) {
+                    if(data["UserEmail"].toString() == RESETED_DB_MAIL || data["UserEmail"].toString() == Firebase.auth.currentUser!!.email.toString()) {
                         disconnectPassword(data)
                     }else{
                         toast("Wrong user, cant disconnect (email)")
@@ -87,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
         val userDocRef = dbTwo.collection("LockUser").document("UserPassword")
         userDocRef.get()
             .addOnSuccessListener { document ->
-                if(emailMap["Password"].toString() == "" || emailMap["Password"].toString() == document["Password"].toString()){
+                if(emailMap["Password"].toString() == RESETED_DB_PASSWORD || emailMap["Password"].toString() == document["Password"].toString()){
                     resetEmail()
                 }else{
                     toast("Wrong user, cant disconnect (password)")
@@ -98,13 +100,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun resetEmail(){
-        val db  = FirebaseFirestore.getInstance()
-        val dbTwo = FirebaseFirestore.getInstance()
-        val mapTwo : MutableMap<String, Any> = HashMap()
-        val map : MutableMap<String, Any> = HashMap()
+        val db      = FirebaseFirestore.getInstance()
+        val dbTwo   = FirebaseFirestore.getInstance()
+        val mapTwo  : MutableMap<String, Any> = HashMap()
+        val map     : MutableMap<String, Any> = HashMap()
         try {
-            map["UserEmail"] = "0"
-            map["Password"]  = ""
+            map["UserEmail"] = RESETED_DB_MAIL
+            map["Password"]  = RESETED_DB_PASSWORD
             db.collection("LockUser")
                 .document("LockUser")
                 .set(map)
@@ -112,8 +114,8 @@ class HomeActivity : AppCompatActivity() {
             toast(e.message.toString())
         }
         try {
-            mapTwo["UserEmail"] = "0"
-            mapTwo["Password"]  = ""
+            mapTwo["UserEmail"] = RESETED_DB_MAIL
+            mapTwo["Password"]  = RESETED_DB_PASSWORD
             dbTwo.collection("LockUser")
                     .document("UserPassword")
                     .set(map)

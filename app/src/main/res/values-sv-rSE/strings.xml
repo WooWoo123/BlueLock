@@ -6,7 +6,7 @@
     <string name="hint_password">Lösenord...</string>
     <string name="hint_confirm_password">Bekräfta Lösenord</string>
     <string name="text_login">Logga in</string>
-    <string name="text_register">Lägg till google konto</string>
+    <string name="text_register">Lägg till konto</string>
     <string name="text_not_member">Inget konto än? Skapa ett</string>
     <string name="text_member">Har redan ett konto? Logga in</string>
     <string name="error_message_email">Fyll i korekt mail</string>
