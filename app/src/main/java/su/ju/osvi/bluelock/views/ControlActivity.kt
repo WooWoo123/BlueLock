@@ -19,6 +19,11 @@ import java.lang.Exception
 import java.util.*
 
 class ControlActivity : AppCompatActivity() {
+    /**
+     * correctUser is used as a safety measure to make sure the correct user is sending commands to the bluetooth device.
+     * the variable "device" is a lateinit var that allows the paired device which is fetched from the intent to be used in the whole class.
+     * BluetoothGatt, characteristics and gattService are nessecary attributes used in connecting and communicating to a bluetooth device.
+     */
     var correctUser : Boolean = false
     lateinit var device        : BluetoothDevice
     var characteristic         : BluetoothGattCharacteristic = BluetoothGattCharacteristic(m_myUUID, 1,1)
@@ -26,6 +31,10 @@ class ControlActivity : AppCompatActivity() {
     lateinit var gattService   : BluetoothGattService
 
     companion object {
+        /**
+         * UUID is a tool used to identify a single bluetooth component/device.
+         * UUID = Universially Unique Identifyer
+         */
         var m_myUUID: UUID = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
         var m_myCharacteristicsUUID : UUID = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e")
     }
@@ -40,6 +49,9 @@ class ControlActivity : AppCompatActivity() {
         val control_led_connect     = this.findViewById<Button>(R.id.control_led_disconnect)
 
 
+        /**
+         * Buttons used to communicate to the bluetooth Device.
+         */
         control_led_on.setOnClickListener{
 
             if (device != null) {
@@ -67,6 +79,10 @@ class ControlActivity : AppCompatActivity() {
 
 
     private fun sendCommand(input: String){
+        /**
+         * Assigning gattService and characteristics using UUID.
+         * Sending a command to the Bluetooth device based on input from buttons.
+         */
         try {
             gattService  = bluetoothGatt.getService(m_myUUID)
         }catch (e : Exception){
@@ -91,6 +107,9 @@ class ControlActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * connecting bluetoothGatt using the "device" variable which came as a result from the bleScanCallback.
+     */
     private fun connectToDevice(){
         Log.v("Control activity", "Connected to device")
         bluetoothGatt  = device.connectGatt(this, false, bleGattCallback)
@@ -131,6 +150,10 @@ class ControlActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Setting the current user email as the active on in the database. This locks the device to this particular email.
+     * A password is also generated and saved in two places so that an identical email is not enough to unlock and use the device.
+     */
     fun setEmail(){
         toast("Connected to device")
         correctUser = true
@@ -159,8 +182,12 @@ class ControlActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Checks if there is any saved email for the bluetooth device in the database, if not (userEmail is "0") or
+     * if userEmail is not "0", check if the current users email matches the one that is saved as active for the bluetooth device in the database.
+     * If the email check is successful, go to checkPassword and verify the password aswell.
+     */
     fun checkEmail() {
-
         val db = FirebaseFirestore.getInstance()
 
         val docRef = db.collection("LockUser").document("LockUser")
@@ -178,6 +205,10 @@ class ControlActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Verifies if the bluetooth devices password matches the current users password. Both are fetched from the database.
+     * If the verification is successful, go to setEmail.
+     */
     fun checkPassword(emailMap : Map<String, String>){
         val dbTwo = FirebaseFirestore.getInstance()
         val userDocRef = dbTwo.collection("LockUser").document("UserPassword")

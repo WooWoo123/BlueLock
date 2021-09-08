@@ -34,6 +34,9 @@ class SelectDeviceActivity : AppCompatActivity() {
         (getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
     }
 
+    /**
+     * Allowing the phone device to access bluetooth and location at runtime.
+     */
     private fun makeRequestCoarse() {
         ActivityCompat.requestPermissions(this,
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
@@ -125,6 +128,19 @@ class SelectDeviceActivity : AppCompatActivity() {
 
     }
     private fun startBLEScan() {
+        /**
+         * bluetoothLeScanner.startScan :
+         * This class provides methods to perform scan related operations for Bluetooth LE devices.
+         * An application can scan for a particular type of Bluetooth LE devices using ScanFilter.
+         * Source : https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner
+         *
+         * scanFilter : Criteria for filtering result from Bluetooth LE scans.
+         * A ScanFilter allows clients to restrict scan results to only those that are of interest to them.
+         * Source : https://developer.android.com/reference/android/bluetooth/le/ScanFilter
+         *
+         * scanSettings : Bluetooth LE scan settings are passed to BluetoothLeScanner#startScan to define the parameters for the scan.
+         * Source : https://developer.android.com/reference/android/bluetooth/le/ScanSettings
+         */
         Log.v(TAG, "StartbleScan")
         val scanFilter                           = ScanFilter.Builder().build()
         val scanFilters: MutableList<ScanFilter> = mutableListOf()
@@ -138,6 +154,12 @@ class SelectDeviceActivity : AppCompatActivity() {
         )
     }
     private val bleScanCallBack: ScanCallback by lazy {
+        /**
+         * Bluetooth LE scan callbacks are used to report back results from the bluetooth scan.
+         * Checking if the bluetooth device name is equal to the one we are searching for, and if this is the case the device is added to the btDevices list.
+         * This is used to filter out any other bluetooth devices that may be present in the area.
+         * If the bluetooth device is added to the list, the bluetooth scan is stopped.
+         */
         Log.v(TAG, "scanCallBack")
         object : ScanCallback() {
             override fun onScanResult(callbackType: Int, result: ScanResult?) {
