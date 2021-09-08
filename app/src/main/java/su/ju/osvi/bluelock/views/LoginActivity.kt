@@ -43,10 +43,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        signInInputsArray = arrayOf(SignInEmail, SignInPassword)
         // hiding the action bar
         supportActionBar!!.hide()
 
+        signInInputsArray   = arrayOf(SignInEmail, SignInPassword)
 
         // Initialize Firebase Auth
         auth                = Firebase.auth
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in and update UI accordingly.
         val currentUser = auth.currentUser
         updateUI(currentUser)
         //if(currentUser != null){
@@ -95,6 +95,9 @@ class LoginActivity : AppCompatActivity() {
         //}
     }
 
+    /***********************************************************************************************
+     * If user already logged in, move on to "HomeActivity"
+     **********************************************************************************************/
     private fun updateUI(user: FirebaseUser?) {
         if(user == null)    {
             Log.w(TAG, "User is null, not going to navigate")
@@ -143,8 +146,8 @@ class LoginActivity : AppCompatActivity() {
     private fun notEmpty(): Boolean = signInEmail.isNotEmpty() && signInPassword.isNotEmpty()
 
     private fun signInUser() {
-        signInEmail = SignInEmail.text.toString().trim()
-        signInPassword = SignInPassword.text.toString().trim()
+        signInEmail     = SignInEmail.text.toString().trim()
+        signInPassword  = SignInPassword.text.toString().trim()
 
         if (notEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(signInEmail, signInPassword)

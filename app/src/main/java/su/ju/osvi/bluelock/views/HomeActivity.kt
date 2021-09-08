@@ -30,10 +30,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val unitsButton         = findViewById<Button>(R.id.btnUnits)
         val btnEnd              = findViewById<Button>(R.id.btnMyActiveUnit)
-
-
 
         btnEnd.setOnClickListener {
             disconnectEmail()
