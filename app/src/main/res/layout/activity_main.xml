@@ -10,17 +10,17 @@
 
 
     <Button
-        android:id                           ="@+id/btnUnits"
+        android:id                           ="@+id/btn_pair_to_devices"
         android:text                         ="@string/pair_to_device"
         android:layout_width                 ="wrap_content"
         android:layout_height                ="wrap_content"
         app:layout_constraintStart_toStartOf ="parent"
         app:layout_constraintEnd_toEndOf     ="parent"
         app:layout_constraintTop_toTopOf     ="parent"
-        app:layout_constraintBottom_toTopOf  ="@id/btnMyActiveUnit"/>
+        app:layout_constraintBottom_toTopOf  ="@id/btn_end_booking"/>
 
     <Button
-        android:id                            ="@+id/btnMyActiveUnit"
+        android:id                            ="@+id/btn_end_booking"
         android:text                          ="@string/end_connection"
         android:layout_width                  ="wrap_content"
         android:layout_height                 ="wrap_content"

@@ -32,7 +32,7 @@
     <string name="enter_email_address">Enter Email Address</string>
     <string name="message_to_reset_password">Please enter your Email/Username and we will send you an email to reset your password</string>
     <string name="reset_password">Reset Password</string>
-    <string name="end_connection">End Booking Off Device</string>
+    <string name="end_connection">End booking of device</string>
     <string name="pair_to_device">Pair to device</string>
 
 

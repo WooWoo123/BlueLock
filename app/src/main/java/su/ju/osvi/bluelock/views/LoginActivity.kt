@@ -12,7 +12,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -46,14 +45,14 @@ class LoginActivity : AppCompatActivity() {
         // hiding the action bar
         supportActionBar!!.hide()
 
-        signInInputsArray   = arrayOf(SignInEmail, SignInPassword)
+        signInInputsArray   = arrayOf(sign_in_email, sign_in_password)
 
         // Initialize Firebase Auth
         auth                = Firebase.auth
-        googleSignInButton  = findViewById<SignInButton>(R.id.googleSignInButton)
+        googleSignInButton  = findViewById<SignInButton>(R.id.google_sign_in_button)
         nestedScrollView    = findViewById<NestedScrollView>(R.id.nestedScrollView)
-        loginButton         = findViewById<AppCompatButton>(R.id.appCompatButtonLogin)
-        createAccountButton = findViewById<AppCompatTextView>(R.id.textViewLinkRegister)
+        loginButton         = findViewById<AppCompatButton>(R.id.app_compat_button_login)
+        createAccountButton = findViewById<AppCompatTextView>(R.id.text_view_link_register)
         resetPasswordButton = findViewById<AppCompatTextView>(R.id.reset_password)
 
         // Configure Google Sign In
@@ -103,7 +102,6 @@ class LoginActivity : AppCompatActivity() {
             Log.w(TAG, "User is null, not going to navigate")
             return
         }
-
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
@@ -134,20 +132,24 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     updateUI(null)
                 }
+
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
             }
     }
 
     private fun notEmpty(): Boolean = signInEmail.isNotEmpty() && signInPassword.isNotEmpty()
 
     private fun signInUser() {
-        signInEmail     = SignInEmail.text.toString().trim()
-        signInPassword  = SignInPassword.text.toString().trim()
+        signInEmail     = sign_in_email.text.toString().trim()
+        signInPassword  = sign_in_password.text.toString().trim()
 
         if (notEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(signInEmail, signInPassword)

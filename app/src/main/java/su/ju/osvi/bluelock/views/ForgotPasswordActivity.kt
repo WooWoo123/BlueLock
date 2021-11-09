@@ -18,7 +18,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         reset_password_button.setOnClickListener{
             Firebase.auth.sendPasswordResetEmail(email.toString()).addOnCompleteListener {
                 task -> if (task.isSuccessful) {
-                Log.d(TAG, "Password reset sent to submited email")
+                Log.d(TAG, "Password reset sent to submitted email")
             }
 
             }
